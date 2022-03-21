@@ -74,7 +74,8 @@ public class CoolDownRule extends TestWatcher {
                 CoolDownRule.unescapeOptionStr(
                         getArguments().getString(DEVICE_TEMPERATURE_NAME_OPTION, ""));
         if (mDeviceTemperatureName.isEmpty()) {
-            throw new IllegalArgumentException("Missed device temperature name.");
+            Log.w(LOG_TAG, "Missed device temperature name. Skipped waiting for DUT cooling down.");
+            return;
         }
         mPollIntervalSecs = Long.valueOf(getArguments().getString(POLL_INTERVAL_OPTION, "30"));
         mMaxWaitSecs = Long.valueOf(getArguments().getString(MAX_WAIT_OPTION, "1200"));

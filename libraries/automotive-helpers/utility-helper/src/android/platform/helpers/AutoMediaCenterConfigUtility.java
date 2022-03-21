@@ -32,6 +32,9 @@ public class AutoMediaCenterConfigUtility implements IAutoConfigUtility {
     // Car Launcher For Reference Device
     private static final String CAR_LAUNCHER_PACKAGE = "com.android.car.carlauncher";
 
+    // TEST Media App Package
+    private static final String TEST_MEDIA_APP_PACKAGE = "com.android.car.media.testmediaapp";
+
     // Config Map
     private Map<String, AutoConfiguration> mMediaCenterConfigMap;
 
@@ -164,6 +167,9 @@ public class AutoMediaCenterConfigUtility implements IAutoConfigUtility {
 
         // Default Media Apps UI Config
         loadDefaultMediaApp(mMediaCenterConfigMap);
+
+        // Load Test Media app UI Config
+        loadDefaultTestMediaApp(mMediaCenterConfigMap);
     }
 
     private void loadDefaultMediaCenterAppConfig(Map<String, String> mApplicationConfigMap) {
@@ -273,7 +279,50 @@ public class AutoMediaCenterConfigUtility implements IAutoConfigUtility {
                 new AutoConfigResource(
                         AutoConfigConstants.RESOURCE_ID,
                         "car_ui_toolbar_title", MEDIA_CENTER_PACKAGE));
+        mediaAppConfiguration.addResource(
+                AutoConfigConstants.MEDIA_SONGS_LIST,
+                new AutoConfigResource(
+                        AutoConfigConstants.RESOURCE_ID,
+                        "item_container", MEDIA_CENTER_PACKAGE));
+        mediaAppConfiguration.addResource(
+                AutoConfigConstants.MEDIA_APP_NAVIGATION_ICON,
+                new AutoConfigResource(
+                        AutoConfigConstants.RESOURCE_ID,
+                        "car_ui_toolbar_nav_icon_container", MEDIA_CENTER_PACKAGE));
+        mediaAppConfiguration.addResource(
+                AutoConfigConstants.MEDIA_APP_NO_LOGIN_MSG,
+                new AutoConfigResource(
+                        AutoConfigConstants.RESOURCE_ID,
+                        "error_message", MEDIA_CENTER_PACKAGE));
         mMediaCenterConfigMap.put(
                 AutoConfigConstants.MEDIA_APP, mediaAppConfiguration);
+    }
+
+    private void loadDefaultTestMediaApp(
+            Map<String, AutoConfiguration> mMediaCenterConfigMap) {
+        AutoConfiguration testMediaAppConfiguration = new AutoConfiguration();
+        testMediaAppConfiguration.addResource(
+                AutoConfigConstants.TEST_MEDIA_ACCOUNT_TYPE,
+                new AutoConfigResource(
+                        AutoConfigConstants.TEXT, "Account Type"));
+        testMediaAppConfiguration.addResource(
+                AutoConfigConstants.TEST_MEDIA_ACCOUNT_TYPE_PAID,
+                new AutoConfigResource(
+                        AutoConfigConstants.TEXT, "Paid"));
+        testMediaAppConfiguration.addResource(
+                AutoConfigConstants.TEST_MEDIA_ROOT_NODE_TYPE,
+                new AutoConfigResource(
+                        AutoConfigConstants.TEXT, "Root node type"));
+        testMediaAppConfiguration.addResource(
+                AutoConfigConstants.TEST_MEDIA_ROOT_NODE_TYPE_BROWSABLE,
+                new AutoConfigResource(
+                        AutoConfigConstants.TEXT, "Only browse-able content"));
+        testMediaAppConfiguration.addResource(
+                AutoConfigConstants.TEST_MEDIA_APP_CLOSE_SETTING,
+                new AutoConfigResource(
+                        AutoConfigConstants.RESOURCE_ID,
+                        "close_target", TEST_MEDIA_APP_PACKAGE));
+        mMediaCenterConfigMap.put(
+                AutoConfigConstants.TEST_MEDIA_APP, testMediaAppConfiguration);
     }
 }

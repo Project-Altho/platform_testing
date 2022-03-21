@@ -87,6 +87,16 @@ public class CoolDownRuleTest {
                 .inOrder();
     }
 
+    /** Tests that this rule will be skipped if not all required parameters are available. */
+    @Test
+    public void testCoolDownFallback() throws Throwable {
+        boolean screenOn = true;
+        TestableRule rule = new TestableRule(screenOn, mThermalHelper);
+        rule.apply(rule.getTestStatement(), Description.createTestDescription("clzz", "mthd"))
+                .evaluate();
+        assertThat(rule.getOperations()).containsExactly(OPS_TEST).inOrder();
+    }
+
     /** Tests that this rule will fail to cool down due to timeout as expected steps. */
     @Test
     public void testCoolDownTimeout() throws Throwable {

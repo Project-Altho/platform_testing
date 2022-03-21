@@ -151,4 +151,23 @@ public interface IAutoMediaHelper extends IAppHelper {
      * @return true if all app names in mediaAppsNames shows up in Media Apps Grid
      */
     boolean areMediaAppsPresent(List<String> mediaAppsNames);
+
+    /**
+     * Setup expectations: "Media apps" Grid is open.
+     *
+     * @param appName App name to open
+     */
+    void openApp(String appName);
+
+    /**
+     * Setup expectations: Media app is open.
+     */
+    void openMediaAppSettingsPage();
+
+    /**
+     * Setup expectations: Media app is open. Account not logged in.
+     *
+     * @return Error message for no user login
+     */
+    String getMediaAppUserNotLoggedInErrorMessage();
 }

@@ -410,7 +410,9 @@ public class MediaCenterHelperImpl extends AbstractAutoStandardAppHelper
         if (menuItemElements.size() == 0) {
             throw new UnknownUiException("Unable to find Media drop down.");
         }
-        clickAndWaitForIdleScreen(menuItemElements.get(1));
+        // Media menu drop down is the last item in Media App Screen
+        int positionOfMenuItemDropDown = menuItemElements.size() - 1;
+        clickAndWaitForIdleScreen(menuItemElements.get(positionOfMenuItemDropDown));
     }
 
     /** {@inheritDoc} */
@@ -438,5 +440,49 @@ public class MediaCenterHelperImpl extends AbstractAutoStandardAppHelper
             }
         }
         return true;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void openApp(String appName) {
+        SystemClock.sleep(SHORT_RESPONSE_WAIT_MS); // to avoid stale object error
+        UiObject2 app = scrollAndFindUiObject(By.text(appName));
+        if (app != null) {
+            clickAndWaitForIdleScreen(app);
+        } else {
+            throw new IllegalStateException(String.format("App %s cannot be found", appName));
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void openMediaAppSettingsPage() {
+        List<UiObject2> mediaAppMenuItem = findUiObjects(getResourceFromConfig(
+                AutoConfigConstants.MEDIA_CENTER,
+                AutoConfigConstants.MEDIA_APP,
+                AutoConfigConstants.MEDIA_APP_DROP_DOWN_MENU));
+        if (mediaAppMenuItem.size() == 0) {
+            throw new UnknownUiException("Unable to find Media App menu items.");
+        }
+        // settings page is 2nd last item in Menu Item list
+        int settingsItemPosition = mediaAppMenuItem.size() - 2;
+        clickAndWaitForIdleScreen(mediaAppMenuItem.get(settingsItemPosition));
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public String getMediaAppUserNotLoggedInErrorMessage() {
+        UiObject2 noLoginMsg = findUiObject(getResourceFromConfig(
+                AutoConfigConstants.MEDIA_CENTER,
+                AutoConfigConstants.MEDIA_APP,
+                AutoConfigConstants.MEDIA_APP_NO_LOGIN_MSG));
+        if (noLoginMsg == null) {
+            throw new UnknownUiException("Unable to find Media app error text.");
+        }
+        return noLoginMsg.getText();
     }
 }

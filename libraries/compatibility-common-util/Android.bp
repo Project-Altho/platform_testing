@@ -26,7 +26,6 @@ java_library_static {
     static_libs: [
         "guava",
         "junit",
-        "platform-test-annotations",
     ],
 }
 
@@ -34,6 +33,7 @@ java_library {
     name: "compatibility-common-util-lib",
     visibility: [
         "//test/suite_harness/common/util",
+        "//platform_testing/libraries/compatibility-common-util/tests",
     ],
     srcs: ["src/**/*.java"],
     host_supported: true,

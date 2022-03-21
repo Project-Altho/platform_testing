@@ -64,7 +64,8 @@ public class AppVersionListener extends BaseCollectionListener<Long> {
         if (pkgNamesString == null) {
             Log.w(TAG, "No package name provided. All packages will be collected");
             mAppVersionHelper.setUp();
+        } else {
+            mAppVersionHelper.setUp(pkgNamesString.split(PKG_NAME_SEPARATOR));
         }
-        mAppVersionHelper.setUp(pkgNamesString.split(PKG_NAME_SEPARATOR));
     }
 }
